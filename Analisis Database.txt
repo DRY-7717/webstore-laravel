@@ -1,0 +1,52 @@
+Analisis Database
+
+Category
+- Icon Category
+- Nama Category
+- Slug Category
+
+Product
+- Nama Product
+- Owner Product
+- Harga Product
+- Deskripsi Product
+- Relasi ke owner Product
+- Relasi Category Product
+
+Gallery Product
+- Fotonya
+- Relasi Ke Product
+
+Cart 
+- Relasi ke Product
+- Relasi ke User
+- Qty
+
+User
+- Nama
+- Email
+- Password
+- Alamat 1
+- Alamat 2
+- Province pake API indoregion azishapidin
+- Kota pake API indoregion azishapidin
+- Kode pos
+- Negara
+- No Hp
+- Nama toko 
+- Category toko
+- Status Toko
+Transaksi
+- Relasi Ke User
+- Jumlah Asuransi
+- Ongkir
+- Total
+- Status Transaksi (unpaid/pending/shipping/success/failed)
+- Nomor Resi
+
+Transaksi Detail
+
+- Relasi Ke trasnsaksi
+- Relasi Product
+- Harga Barang
+
