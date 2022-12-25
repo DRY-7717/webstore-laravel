@@ -9,9 +9,13 @@ use App\Http\Controllers\DashboardSettingController;
 use App\Http\Controllers\DashboardTransactionController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\SuccessController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,14 +43,22 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
-Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
-Route::get('/dashboard/product',[DashboardProductController::class,'index'])->name('dashboard-product');
-Route::get('/dashboard/product/create',[DashboardProductController::class,'create'])->name('dashboard-product-create');
-Route::get('/dashboard/product/{id}',[DashboardProductController::class,'detail'])->name('dashboard-product-detail');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
+Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
+Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'detail'])->name('dashboard-product-detail');
 
-Route::get('/dashboard/transaction',[DashboardTransactionController::class,'index'])->name('dashboard-transaction');
-Route::get('/dashboard/transaction/{id}',[DashboardTransactionController::class,'detail'])->name('dashboard-transaction-detail');
+Route::get('/dashboard/transaction', [DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
+Route::get('/dashboard/transaction/{id}', [DashboardTransactionController::class, 'detail'])->name('dashboard-transaction-detail');
 
 Route::get('/dashboard/settings', [DashboardSettingController::class, 'storesetting'])->name('dashboard-storesetting');
 
 Route::get('/dashboard/account', [DashboardSettingController::class, 'accountsetting'])->name('dashboard-accountsetting');
+
+// Controller Admin
+
+Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    Route::resource('/category',AdminCategoryController::class);
+
+});
