@@ -12,6 +12,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DashboardProductController as AdminDashboardProductController;
+use App\Http\Controllers\Admin\DashboardProductGalleryController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\SuccessController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -44,9 +47,10 @@ Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
-Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
-Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'detail'])->name('dashboard-product-detail');
+
+// Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
+// Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
+// Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'detail'])->name('dashboard-product-detail');
 
 Route::get('/dashboard/transaction', [DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
 Route::get('/dashboard/transaction/{id}', [DashboardTransactionController::class, 'detail'])->name('dashboard-transaction-detail');
@@ -60,5 +64,7 @@ Route::get('/dashboard/account', [DashboardSettingController::class, 'accountset
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     Route::resource('/category',AdminCategoryController::class);
-
+    Route::resource('/user', UserController::class);
+    Route::resource('/product', AdminDashboardProductController::class);
+    Route::resource('/productgallery', DashboardProductGalleryController::class);
 });

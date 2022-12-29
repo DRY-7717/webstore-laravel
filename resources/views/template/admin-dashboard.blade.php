@@ -28,9 +28,15 @@
                 <div class="list-group list-group-flush">
                     <a href="{{ route('admin.admin-dashboard') }}" class="list-group-item list-group-item-action {{ Request::is('admin') ? 'active' : false }}">Dashboard</a>
 
-                    <a href="dashboard.html" class="list-group-item list-group-item-action">Product</a>
+                    <a href="{{ route('admin.product.index') }}"
+                        class="list-group-item list-group-item-action {{ Request::is('admin/product*') ? 'active' : false  }}  ">Product</a>
+
+                    <a href="{{ route('admin.productgallery.index') }}"
+                        class="list-group-item list-group-item-action {{ Request::is('admin/productgallery*') ? 'active' : false }}">Product Gallery</a>
+
                     <a href="{{ route('admin.category.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/category*') ? 'active' : false }}">Categories</a>
-                    <a href="dashboard.html" class="list-group-item list-group-item-action">Users</a>
+
+                    <a href="{{ route('admin.user.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/user*') ? 'active' : false }}">Users</a>
 
                     <a href="dashboard-transactions.html" class="list-group-item list-group-item-action">Transaction</a>
                     <a href="dashboard.html" class="list-group-item list-group-item-action">Sign Out</a>

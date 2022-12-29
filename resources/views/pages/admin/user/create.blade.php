@@ -6,40 +6,59 @@
 <div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
         <div class="dashboard-heading">
-            <h2 class="dashboard-title">Category</h2>
-            <p class="dashboard-subtitle">Create Category</p>
+            <h2 class="dashboard-title">User</h2>
+            <p class="dashboard-subtitle">Create User</p>
         </div>
         <div class="dashboard-content">
             <div class="row">
                 <div class="col-md-12">
                     @if ($errors->any())
                     <div class="alert-danger">
-                        <ul>
+                        <ol>
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                             @endforeach
-                        </ul>
+                        </ol>
                     </div>
                     @endif
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('admin.category.store') }}" method="post"
-                                enctype="multipart/form-data">
+                            <form action="{{ route('admin.user.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="productname">Nama Kategori</label>
+                                            <label for="name">Nama User</label>
                                             <input type="text" name="name" id="name" class="form-control"
                                                 value="{{ old('name') }}" />
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="logo">Logo</label>
-                                            <input type="file" name="logo" id="logo" class="form-control" />
+                                            <label for="email">Email User</label>
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                value="{{ old('email') }}" />
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="password">Password User</label>
+                                            <input type="password" name="password" id="password" class="form-control"
+                                                value="{{ old('password') }}" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="role">Role</label>
+                                            <select class="form-control" name="role">
+                                                <option selected disabled>Select Role</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="user">User</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col text-right">

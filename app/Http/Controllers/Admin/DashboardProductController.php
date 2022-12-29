@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-class CategoryController extends Controller
+class DashboardProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         //
         if (request()->ajax()) {
-            $query = Category::query();
+            $query = Product::with(['user','category']);
 
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
@@ -30,23 +30,19 @@ class CategoryController extends Controller
                                     Action
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="' . route('admin.category.edit', $item->id) . '">Edit</a>
-                                    <form action="' . route('admin.category.destroy', $item->id) . '" method="post">
+                                    <a class="dropdown-item" href="' . route('admin.product.edit', $item->id) . '">Edit</a>
+                                    <form action="' . route('admin.product.destroy', $item->id) . '" method="post">
                                         ' . method_field('delete') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger" onclick="return confirm(`apakah anda ingin menghapus data?`)">Delete</button>
                                     </form>
                                 </div>
                             </div>
                         ';
-                })->editColumn('logo', function ($item) {
-                    return $item->logo ? '<img src="' . asset('storage/' . $item->logo) . '" alt="" width="40" >' : '';
-                })
-                ->rawColumns(['action', 'logo'])
+                })->rawColumns(['action'])
                 ->make();
         }
-
-        return view('pages.admin.category.index', [
-            'title' => 'Webstore | Category'
+        return view('pages.admin.product.index', [
+            'title' => 'Webstore | List of Product'
         ]);
     }
 
@@ -58,8 +54,10 @@ class CategoryController extends Controller
     public function create()
     {
         //
-        return view('pages.admin.category.create', [
-            'title' => 'Web Store | Create',
+        return view('pages.admin.product.create',[
+            'title' => 'Webstore | Create Product',
+            'categories' => Category::all(),
+            'users' => User::all()
         ]);
     }
 
@@ -71,24 +69,30 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        //
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'logo' => 'image|file|max:2054',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|integer',
+            'description' => 'required',
         ]);
-        $validatedData['logo'] = $request->file('logo')->store('category_img');
-        $validatedData['slug'] = Str::slug($request->name);
-        Category::create($validatedData);
 
-        return redirect()->route('admin.category.index');
+        $validatedData['slug'] = Str::slug($request->name);
+
+        Product::create($validatedData);
+
+        return redirect()->route('admin.product.index');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Product $product)
     {
         //
     }
@@ -96,63 +100,58 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Product $product)
     {
         //
-        return view('pages.admin.category.edit', [
-            'title' => 'Web Store | Edit',
-            'category' => $category
+        return view('pages.admin.product.edit', [
+            'title' => 'Webstore | Edit Product',
+            'categories' => Category::all(),
+            'users' => User::all(),
+            'product' => $product
         ]);
+
+        
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Product $product)
     {
         //
         $validatedData = $request->validate([
             'name' => 'required|max:255',
-            'logo' => 'image|file|max:255',
+            'user_id' => 'required|exists:users,id',
+            'category_id' => 'required|exists:categories,id',
+            'price' => 'required|integer',
+            'description' => 'required',
         ]);
 
         $validatedData['slug'] = Str::slug($request->name);
 
-        if ($request->file()) {
-            if ($category->logo) {
-                Storage::delete($category->logo);
-            }
-            # code...
-            $validatedData['logo'] = $request->file('logo')->store('category_img');
-        }
-        Category::where('id', $category->id)->update($validatedData);
+        Product::where('id', $product->id)->update($validatedData);
 
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.product.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Product $product)
     {
         //
+        Product::destroy($product->id);
 
-        if ($category->logo) {
-            Storage::delete($category->logo);
-        }
-
-        Category::destroy($category->id);
-
-        return redirect()->route('admin.category.index');
+        return redirect()->route('admin.product.index');
     }
 }

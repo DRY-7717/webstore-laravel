@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Productgallery extends Model
 {
     use HasFactory;
+    protected $guarded = ['id'];
+
+    protected $with = ['product'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class,'products_id','id');
+    }
 }
