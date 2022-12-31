@@ -12,6 +12,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\DashboardGalleryproductController;
 use App\Http\Controllers\Admin\DashboardProductController as AdminDashboardProductController;
 use App\Http\Controllers\Admin\DashboardProductGalleryController;
 use App\Http\Controllers\Admin\UserController;
@@ -66,5 +67,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::resource('/category',AdminCategoryController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/product', AdminDashboardProductController::class);
-    Route::resource('/productgallery', DashboardProductGalleryController::class);
+    Route::resource('/galleryproduct', DashboardGalleryproductController::class);
 });

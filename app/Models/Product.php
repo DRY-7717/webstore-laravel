@@ -11,12 +11,13 @@ class Product extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = ['id'];
-    protected $with = ['user','category'];
+    protected $with = ['user','category','galleryproduct'];
 
-    public function productgallery()
+    public function galleryproduct()
     {
-        return $this->hasMany(Productgallery::class, 'product_id', 'id');
+        return $this->hasMany(Galleryproduct::class,'product_id','id');
     }
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');

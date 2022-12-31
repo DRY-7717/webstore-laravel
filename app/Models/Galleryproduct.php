@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Productgallery extends Model
+class Galleryproduct extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
 
-    protected $with = ['product'];
-
     public function product()
     {
-        return $this->belongsTo(Product::class,'products_id','id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
+
+
 }

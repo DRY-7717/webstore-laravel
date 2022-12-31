@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Products;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Products::class);
+            $table->foreignIdFor(Product::class);
             $table->foreignIdFor(User::class);
             $table->timestamps();
         });

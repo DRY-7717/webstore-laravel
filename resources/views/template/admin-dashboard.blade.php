@@ -31,8 +31,8 @@
                     <a href="{{ route('admin.product.index') }}"
                         class="list-group-item list-group-item-action {{ Request::is('admin/product*') ? 'active' : false  }}  ">Product</a>
 
-                    <a href="{{ route('admin.productgallery.index') }}"
-                        class="list-group-item list-group-item-action {{ Request::is('admin/productgallery*') ? 'active' : false }}">Product Gallery</a>
+                    <a href="{{ route('admin.galleryproduct.index') }}"
+                        class="list-group-item list-group-item-action {{ Request::is('admin/galleryproduct*') ? 'active' : false }}">Gallery Product</a>
 
                     <a href="{{ route('admin.category.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/category*') ? 'active' : false }}">Categories</a>
 

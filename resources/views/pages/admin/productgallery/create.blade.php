@@ -23,17 +23,17 @@
                     @endif
                     <div class="card mb-5">
                         <div class="card-body">
-                            <form action="{{ route('admin.productgallery.store') }}" method="post"
+                            <form action="{{ route('admin.galleryproduct.store') }}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="products_id">Product</label>
-                                            <select class="form-control" name="products_id">
+                                            <label for="product_id">Product</label>
+                                            <select class="form-control" name="product_id">
                                                 <option selected disabled>Select Produk</option>
                                                 @foreach ($products as $product)
-                                                @if (old('products_id') == $product->id)
+                                                @if (old('product_id') == $product->id)
                                                 <option value="{{ $product->id }}" selected>{{ $product->name }}
                                                 </option>
                                                 @else

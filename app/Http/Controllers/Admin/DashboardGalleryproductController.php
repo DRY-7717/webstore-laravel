@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Galleryproduct;
 use App\Models\Product;
-use App\Models\Productgallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class DashboardProductGalleryController extends Controller
+class DashboardGalleryproductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class DashboardProductGalleryController extends Controller
     {
         //
         if (request()->ajax()) {
-            $query = Productgallery::with(['product']);
+            $query = Galleryproduct::with(['product']);
 
             return DataTables::of($query)
                 ->addColumn('action', function ($item) {
@@ -30,7 +30,7 @@ class DashboardProductGalleryController extends Controller
                                     Action
                                 </button>
                                 <div class="dropdown-menu">
-                                    <form action="' . route('admin.productgallery.destroy', $item->id) . '" method="post">
+                                    <form action="' . route('admin.galleryproduct.destroy', $item->id) . '" method="post">
                                         ' . method_field('delete') . csrf_field() . '
                                         <button type="submit" class="dropdown-item text-danger" onclick="return confirm(`apakah anda ingin menghapus data?`)">Delete</button>
                                     </form>
@@ -40,12 +40,12 @@ class DashboardProductGalleryController extends Controller
                 })->editColumn('photo', function ($item) {
                     return $item->photo ? '<img src="' . asset('storage/' . $item->photo) . '" alt="" width="80" >' : '';
                 })
-                ->rawColumns(['action','photo'])
+                ->rawColumns(['action', 'photo'])
                 ->make();
         }
         return view('pages.admin.productgallery.index', [
             'title' => 'Webstore | List of Product Gallery',
-            'galleries' => Productgallery::all()
+            'galleries' => Galleryproduct::all()
         ]);
     }
 
@@ -57,12 +57,10 @@ class DashboardProductGalleryController extends Controller
     public function create()
     {
         //
-
         return view('pages.admin.productgallery.create', [
             'title' => 'Webstore | List of Product Gallery',
-            'products'=>  Product::all()
+            'products' =>  Product::all()
         ]);
-
     }
 
     /**
@@ -74,28 +72,25 @@ class DashboardProductGalleryController extends Controller
     public function store(Request $request)
     {
         //
-        $validatedData =$request->validate([
-            'products_id' => 'required|exists:products,id',
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
             'photo' => 'required|image|file|max:2054'
         ]);
 
+        $validatedData['photo'] = $request->file('photo')->store('gallery');
 
+        Galleryproduct::create($validatedData);
 
-      
-        $validatedData['photo']= $request->file('photo')->store('gallery');
-
-        Productgallery::create($validatedData);
-
-        return redirect()->route('admin.productgallery.index');
+        return redirect()->route('admin.galleryproduct.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Productgallery  $productgallery
+     * @param  \App\Models\Galleryproduct  $galleryproduct
      * @return \Illuminate\Http\Response
      */
-    public function show(Productgallery $productgallery)
+    public function show(Galleryproduct $galleryproduct)
     {
         //
     }
@@ -103,10 +98,10 @@ class DashboardProductGalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Productgallery  $productgallery
+     * @param  \App\Models\Galleryproduct  $galleryproduct
      * @return \Illuminate\Http\Response
      */
-    public function edit(Productgallery $productgallery)
+    public function edit(Galleryproduct $galleryproduct)
     {
         //
     }
@@ -115,10 +110,10 @@ class DashboardProductGalleryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Productgallery  $productgallery
+     * @param  \App\Models\Galleryproduct  $galleryproduct
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Productgallery $productgallery)
+    public function update(Request $request, Galleryproduct $galleryproduct)
     {
         //
     }
@@ -126,18 +121,18 @@ class DashboardProductGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Productgallery  $productgallery
+     * @param  \App\Models\Galleryproduct  $galleryproduct
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Productgallery $productgallery)
+    public function destroy(Galleryproduct $galleryproduct)
     {
         //
-        if ($productgallery->photo) {
-        
-            Storage::delete($productgallery->photo);
+        if ($galleryproduct->photo) {
+
+            Storage::delete($galleryproduct->photo);
         }
 
-        Productgallery::destroy($productgallery->id);
-        return redirect()->route('admin.productgallery.index');
+        Galleryproduct::destroy($galleryproduct->id);
+        return redirect()->route('admin.galleryproduct.index');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Galleryproduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -20,8 +22,17 @@ class HomeController extends Controller
      */
     public function index()
     {        
+        
+
+        
+        $product = Product::all();
+
+        return $product;
+        
         return view('pages.home',[
-            'title' => 'Webstore Laravel'
+            'title' => 'Webstore Laravel',
+            'products' => Product::all()
+            
         ]);
     }
 }

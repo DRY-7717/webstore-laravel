@@ -17,7 +17,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
-                            <a href="{{ route('admin.productgallery.create') }}" class="btn btn-primary mb-3">+ Create New
+                            <a href="{{ route('admin.galleryproduct.create') }}" class="btn btn-primary mb-3">+ Create New
                                 Gallery</a>
 
                             <div class="table-responsive">
