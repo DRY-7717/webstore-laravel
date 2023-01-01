@@ -42,7 +42,12 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/category', [CategoryController::class, 'index'])->name('category');
-Route::get('/detail/{id}', [DetailController::class, 'index'])->name('detail');
+
+Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
+
+
+Route::get('/detail/{product:slug}', [DetailController::class, 'index'])->name('detail');
+
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');

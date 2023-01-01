@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Galleryproduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -24,15 +25,12 @@ class HomeController extends Controller
     {        
         
 
-        
-        $product = Product::all();
+   
 
-        return $product;
-        
         return view('pages.home',[
             'title' => 'Webstore Laravel',
-            'products' => Product::all()
-            
+            'products' => Product::latest()->take(8)->get(),
+            'categories' => Category::all()
         ]);
     }
 }
