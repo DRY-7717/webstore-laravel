@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,12 +49,23 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
+    public function showRegistrationForm()
+    {
+        return view('auth.register', [
+            'categories' => Category::all()
+        ]);
+    }
     protected function validator(array $data)
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
+            'cpassword' => ['required', 'string', 'min:8', 'same:password'],
+            'store_name' => ['nullable', 'string','max:255'],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'is_store_open' => ['required'],
+            
         ]);
     }
 
@@ -68,12 +81,19 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'store_name' => isset($data['store_name']) ? $data['store_name'] : '',
+            'store_status' => isset($data['is_store_open']) ? 1 : 0,
+            'category_id' => isset($data['category_id']) ? $data['category_id'] : NULL,
         ]);
     }
     public function success()
     {
-        return view('auth.success',[
+        return view('auth.success', [
             'title' => 'Webstore Laravel | Register Success'
         ]);
+    }
+    public function check(Request $request)
+    {
+        return User::where('email', $request->email)->count() > 0 ? 'unavailable' : 'available';
     }
 }

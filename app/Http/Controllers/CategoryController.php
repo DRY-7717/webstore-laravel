@@ -17,7 +17,6 @@ class CategoryController extends Controller
             'products' => Product::latest()->paginate(32)->withQueryString()
         ]);
     }
-
     public function show(Category $category)
     {
 
