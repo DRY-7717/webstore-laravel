@@ -11,6 +11,7 @@ class CategoryController extends Controller
     //
     public function index()
     {
+        
         return view('pages.category', [
             'title' => 'Webstore Laravel | Category',
             'categories' => Category::all(),

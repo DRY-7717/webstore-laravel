@@ -45,10 +45,12 @@ Route::get('/category', [CategoryController::class, 'index'])->name('category');
 
 Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->name('category.show');
 
-
 Route::get('/detail/{product:slug}', [DetailController::class, 'index'])->name('detail');
+Route::post('/detail/{id}', [DetailController::class, 'add'])->name('detail-add');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::delete('/card/{id}', [CartController::class,'destroy'])->name('delete-cart');
+
 Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
