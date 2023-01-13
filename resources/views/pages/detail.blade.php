@@ -61,7 +61,7 @@
                         </form>
                         @else
                         <a href="{{ route('login') }}" class="btn btn-success px-4 text-white btn-block mb-3">
-                            Add to Cart</a>
+                            Sign in to Add</a>
                         @endauth
                     </div>
                 </div>

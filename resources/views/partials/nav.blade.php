@@ -21,15 +21,14 @@
                 <ul class="navbar-nav d-none d-lg-flex ml-auto">
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link" id="navbar-dropdown" role="button" data-toggle="dropdown">
-                            <img src="images/profile.png" alt="" class="rounded-circle mr-2 profile-picture" />
+                            <img src="/images/profile.png" alt="" class="rounded-circle mr-2 profile-picture" />
                             Hi, {{ auth()->user()->name }}
                         </a>
                         <div class="dropdown-menu">
                             <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
                             <a href="{{ route('dashboard-accountsetting') }}" class="dropdown-item">Settings</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); 
+                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); 
                                 document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}
                             </a>
@@ -39,11 +38,21 @@
                             </form>
                         </div>
                     </li>
+                    @php
+
+                    $carts = App\Models\Cart::where('user_id', auth()->user()->id)->get();
+                    @endphp
                     <li class="nav-item">
-                        <a href="#" class="nav-link d-inline-block mt-2">
+                        @if ($carts->count())
+                        <a href="{{ route('cart') }}" class="nav-link  mt-2">
                             <img src="/images/icon-cart-filled.svg" alt="" />
-                            <div class="card-badge">7</div>
+                            <div class="card-badge">{{ $carts->count() }}</div>
                         </a>
+                        @else
+                        <a href="{{ route('cart') }}" class="nav-link  mt-2">
+                            <img src="/images/cart-empty.svg" alt="" />
+                        </a>
+                        @endif
                     </li>
                 </ul>
                 <ul class="navbar-nav d-lg-none d-block">
