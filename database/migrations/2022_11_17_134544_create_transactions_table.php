@@ -21,6 +21,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('shipping_price');
             $table->bigInteger('total_price');
             $table->string('code');
+            $table->string('transaction_status');
             $table->softDeletes();
             $table->timestamps();
         });

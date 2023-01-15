@@ -39,7 +39,7 @@
                     <a href="{{ route('admin.user.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/user*') ? 'active' : false }}">Users</a>
 
                     <a href="dashboard-transactions.html" class="list-group-item list-group-item-action">Transaction</a>
-                    <a href="dashboard.html" class="list-group-item list-group-item-action">Sign Out</a>
+                    <a href="/logout" class="list-group-item list-group-item-action">Sign Out</a>
                 </div>
             </div>
 
@@ -64,10 +64,10 @@
                                         Hi, Gita
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a href="dashboard.html" class="dropdown-item">Dashboard</a>
-                                        <a href="dashboard-account.html" class="dropdown-item">Settings</a>
+                                        <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>
+                                        <a href="{{ route('dashboard-accountsetting') }}" class="dropdown-item">Settings</a>
                                         <div class="dropdown-divider">Settings</div>
-                                        <a href="/" class="dropdown-item">Logout</a>
+                                        <a href="/logout" class="dropdown-item">Logout</a>
                                     </div>
                                 </li>
                             </ul>

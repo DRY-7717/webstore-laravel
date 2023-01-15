@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\DashboardGalleryproductController;
 use App\Http\Controllers\Admin\DashboardProductController as AdminDashboardProductController;
 use App\Http\Controllers\Admin\DashboardProductGalleryController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\SuccessController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -48,31 +49,44 @@ Route::get('/category/{category:slug}', [CategoryController::class, 'show'])->na
 Route::get('/detail/{product:slug}', [DetailController::class, 'index'])->name('detail');
 Route::post('/detail/{id}', [DetailController::class, 'add'])->name('detail-add');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::delete('/card/{id}', [CartController::class,'destroy'])->name('delete-cart');
+
 
 Route::get('/success', [CartController::class, 'success'])->name('success');
 Route::get('/register/success', [RegisterController::class, 'success'])->name('register-success');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
-// Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
-// Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'detail'])->name('dashboard-product-detail');
 
-Route::get('/dashboard/transaction', [DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
-Route::get('/dashboard/transaction/{id}', [DashboardTransactionController::class, 'detail'])->name('dashboard-transaction-detail');
 
-Route::get('/dashboard/settings', [DashboardSettingController::class, 'storesetting'])->name('dashboard-storesetting');
 
-Route::get('/dashboard/account', [DashboardSettingController::class, 'accountsetting'])->name('dashboard-accountsetting');
+
+
+// Controller Middleware Auth
+Route::middleware(['auth'])->group(function () {
+    // cart
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::delete('/card/{id}', [CartController::class, 'destroy'])->name('delete-cart');
+    // Controller checkout
+    Route::post('/checkout', [CheckoutController::class, 'process'])->name('checkout');
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/product', [DashboardProductController::class, 'index'])->name('dashboard-product');
+    Route::get('/dashboard/product/create', [DashboardProductController::class, 'create'])->name('dashboard-product-create');
+    Route::get('/dashboard/product/{id}', [DashboardProductController::class, 'detail'])->name('dashboard-product-detail');
+    Route::get('/dashboard/transaction', [DashboardTransactionController::class, 'index'])->name('dashboard-transaction');
+    Route::get('/dashboard/transaction/{id}', [DashboardTransactionController::class, 'detail'])->name('dashboard-transaction-detail');
+    Route::get('/dashboard/settings', [DashboardSettingController::class, 'storesetting'])->name('dashboard-storesetting');
+    Route::get('/dashboard/account', [DashboardSettingController::class, 'accountsetting'])->name('dashboard-accountsetting');
+});
 
 // Controller Admin
-
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function () {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
-    Route::resource('/category',AdminCategoryController::class);
+    Route::resource('/category', AdminCategoryController::class);
     Route::resource('/user', UserController::class);
     Route::resource('/product', AdminDashboardProductController::class);
     Route::resource('/galleryproduct', DashboardGalleryproductController::class);
 });
+
+
+// Checkout Controller
+Route::post('/checkout/callback', [CheckoutController::class, 'callback'])->name('midtrans-callback');
