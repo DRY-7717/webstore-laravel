@@ -27,84 +27,46 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
                             aria-labelledby="pills-home-tab">
-                            <a href="dashboard-transaction-details.html" class="card card-list d-block">
+                            @foreach ($sellproduct as $sp)
+                            <a href="{{ route('dashboard-transaction-detail', $sp->id) }}" class="card card-list d-block">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            <img src="/images/imgdashboard.png" alt="" />
+                                            <img src="{{ asset('storage/' .  $sp->product->galleryproduct->first()->photo) }}"
+                                                alt="" width="70" />
                                         </div>
-                                        <div class="col-md-4">Syrup Marzan</div>
-                                        <div class="col-md-3">Bima Arya Wicaksana</div>
-                                        <div class="col-md-3">12 Januari 2020</div>
+                                        <div class="col-md-4">{{ $sp->product->name }}</div>
+                                        <div class="col-md-3">{{ $sp->transaction->user->name }}</div>
+                                        <div class="col-md-3">{{ $sp->transaction->created_at }}</div>
                                         <div class="col-md-1 d-none d-md-block">
                                             <img src="/images/dashboard-arrow-right.svg" alt="" />
                                         </div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="dashboard-transaction-details.html" class="card card-list d-block">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <img src="/images/imgdashboard2.png" alt="" />
-                                        </div>
-                                        <div class="col-md-4">Syrup Marzan</div>
-                                        <div class="col-md-3">Bima Arya Wicaksana</div>
-                                        <div class="col-md-3">12 Januari 2020</div>
-                                        <div class="col-md-1 d-none d-md-block">
-                                            <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="dashboard-transaction-details.html" class="card card-list d-block">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <img src="/images/imgdashboard3.png" alt="" />
-                                        </div>
-                                        <div class="col-md-4">Syrup Marzan</div>
-                                        <div class="col-md-3">Bima Arya Wicaksana</div>
-                                        <div class="col-md-3">12 Januari 2020</div>
-                                        <div class="col-md-1 d-none d-md-block">
-                                            <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                            @endforeach
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel"
                             aria-labelledby="pills-profile-tab">
-                            <a href="dashboard-transaction-details.html" class="card card-list d-block">
+                            @foreach ($buyproduct as $bp)
+                            <a href="{{ route('dashboard-transaction-detail', $bp->id) }}" class="card card-list d-block">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-1">
-                                            <img src="/images/imgdashboard.png" alt="" />
+                                            <img src="{{ asset('storage/' .  $bp->product->galleryproduct->first()->photo) }}"
+                                                alt="" width="70" />
                                         </div>
-                                        <div class="col-md-4">Syrup Marzan</div>
-                                        <div class="col-md-3">Bima Arya Wicaksana</div>
-                                        <div class="col-md-3">12 Januari 2020</div>
+                                        <div class="col-md-4">{{ $bp->product->name }}</div>
+                                        <div class="col-md-3">{{ $bp->product->user->name }}</div>
+                                        <div class="col-md-3">{{ $bp->transaction->created_at }}</div>
                                         <div class="col-md-1 d-none d-md-block">
                                             <img src="/images/dashboard-arrow-right.svg" alt="" />
                                         </div>
                                     </div>
                                 </div>
                             </a>
-                            <a href="dashboard-transaction-details.html" class="card card-list d-block">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-1">
-                                            <img src="/images/imgdashboard2.png" alt="" />
-                                        </div>
-                                        <div class="col-md-4">Syrup Marzan</div>
-                                        <div class="col-md-3">Bima Arya Wicaksana</div>
-                                        <div class="col-md-3">12 Januari 2020</div>
-                                        <div class="col-md-1 d-none d-md-block">
-                                            <img src="/images/dashboard-arrow-right.svg" alt="" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                            @endforeach
+
                         </div>
                     </div>
                 </div>

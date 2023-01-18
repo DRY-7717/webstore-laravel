@@ -61,7 +61,7 @@
                                         data-toggle="dropdown">
                                         <img src="/images/profile.png" alt=""
                                             class="rounded-circle mr-2 profile-picture" />
-                                        Hi, Gita
+                                        Hi, {{ auth()->user()->name }}
                                     </a>
                                     <div class="dropdown-menu">
                                         <a href="{{ route('dashboard') }}" class="dropdown-item">Dashboard</a>

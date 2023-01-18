@@ -39,7 +39,6 @@
                         </div>
                     </li>
                     @php
-
                     $carts = App\Models\Cart::where('user_id', auth()->user()->id)->get();
                     @endphp
                     <li class="nav-item">
