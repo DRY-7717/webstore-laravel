@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\DashboardGalleryproductController;
 use App\Http\Controllers\Admin\DashboardProductController as AdminDashboardProductController;
 use App\Http\Controllers\Admin\DashboardProductGalleryController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\SuccessController;
@@ -95,6 +96,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], f
     Route::resource('/user', UserController::class);
     Route::resource('/product', AdminDashboardProductController::class);
     Route::resource('/galleryproduct', DashboardGalleryproductController::class);
+    Route::resource('/transaction', TransactionController::class);
 });
 
 

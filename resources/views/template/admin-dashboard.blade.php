@@ -38,7 +38,7 @@
 
                     <a href="{{ route('admin.user.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/user*') ? 'active' : false }}">Users</a>
 
-                    <a href="dashboard-transactions.html" class="list-group-item list-group-item-action">Transaction</a>
+                    <a href="{{ route('admin.transaction.index') }}" class="list-group-item list-group-item-action {{ Request::is('admin/transaction*') ? 'active' : false }}">Transaction</a>
                     <a href="/logout" class="list-group-item list-group-item-action">Sign Out</a>
                 </div>
             </div>
